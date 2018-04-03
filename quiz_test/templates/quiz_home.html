@@ -20,7 +20,8 @@
             </h3>
         </div>
         <hr/><br/><br/>
-        <div ng-controller="list_controller as lc">
+        <!-- Start of List Controller -->
+        <div ng-controller="list_controller as lc" ng-hide="lc.quiz_active">
             <div class="container">
                 <div class="row">
                     <div class="form-group bmd-form-group col-lg-3 col-sm-4">
@@ -30,7 +31,7 @@
                     </div>
                     <div class="col-lg-7 col-sm5"></div>
                     <div class="col-lg-2 col-sm3">
-                        <button class="btn btn-primary btn-round">
+                        <button class="btn btn-primary btn-round" ng-click="lc.activate_quiz()">
                             <i class="material-icons">favorite</i> Start Quiz
                         <div class="ripple-container"></div></button>
                     </div>
@@ -94,14 +95,23 @@
                 </div>
             </div>
         </div>
+        <!-- End of List Controller -->
+        
+        <!-- Start of Quiz Controller -->
+        <div ng-controller="quiz_controller as qc">     
+
+        </div>
+        <!-- End of Quiz Controller -->        
     </div>
     {% endverbatim %}
 
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'js/my_scripts/app.js' %}"></script>            
+    <script src="{% static 'js/my_scripts/app.js' %}"></script>
+    <script src="{% static 'js/my_scripts/factories/quiz_metrics.js' %}"></script>                            
     <script src="{% static 'js/my_scripts/controllers/list_controller.js' %}"></script>            
+    <script src="{% static 'js/my_scripts/controllers/quiz_controller.js' %}"></script>            
 {% endblock %}
 
 {% block footer %}
