@@ -1,5 +1,8 @@
-app.controller("list_controller", function($http, $scope, $q){
-    // Get Json data from the server
+app.controller("list_controller", function($http, $scope, $q, change_quiz_state){
+    // Factory instance for controller created
+    this.list_controller_factory_instance = change_quiz_state;
+
+    // Get Json data from the server    
     $http({
         method : "GET",
         url : "/api/turtles/"
@@ -15,8 +18,6 @@ app.controller("list_controller", function($http, $scope, $q){
     this.active_turtle = {};
     this.show_details = function(obj){
         this.active_turtle = obj;
-        console.log("Show Details.");
-        console.log(this.active_turtle);
     };
 
     //Search based filtering
@@ -25,7 +26,12 @@ app.controller("list_controller", function($http, $scope, $q){
     //Hide the turtles information part an then activate the quiz
     this.quiz_active = false;
 
-    this.activate_quiz = function(){
-        this.quiz_active = true;
+    //Activate quiz using Factory
+    this.activate_quiz = function(){        
+        this.quiz_activate = this.list_controller_factory_instance.get_activate_quiz();
+        console.log(this.quiz_activate);        
+        this.list_controller_factory_instance.set_activate_quiz(true);
+        this.quiz_activate = this.list_controller_factory_instance.get_activate_quiz();
+        console.log(this.quiz_activate);           
     };
 });

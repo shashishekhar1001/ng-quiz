@@ -21,7 +21,7 @@
         </div>
         <hr/><br/><br/>
         <!-- Start of List Controller -->
-        <div ng-controller="list_controller as lc" ng-hide="lc.quiz_active">
+        <div ng-controller="list_controller as lc" ng-hide="lc.quiz_activate">
             <div class="container">
                 <div class="row">
                     <div class="form-group bmd-form-group col-lg-3 col-sm-4">
@@ -98,8 +98,8 @@
         <!-- End of List Controller -->
         
         <!-- Start of Quiz Controller -->
-        <div ng-controller="quiz_controller as qc">     
-
+        <div ng-controller="quiz_controller as qc" ng-show="qc.quiz_activate">     
+            <h1>Quiz Now Activated.</h1>
         </div>
         <!-- End of Quiz Controller -->        
     </div>
@@ -108,8 +108,7 @@
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'js/my_scripts/app.js' %}"></script>
-    <script src="{% static 'js/my_scripts/factories/quiz_metrics.js' %}"></script>                            
+    <script src="{% static 'js/my_scripts/app.js' %}"></script>                          
     <script src="{% static 'js/my_scripts/controllers/list_controller.js' %}"></script>            
     <script src="{% static 'js/my_scripts/controllers/quiz_controller.js' %}"></script>            
 {% endblock %}
