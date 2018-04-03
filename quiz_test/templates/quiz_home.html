@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+
+{% block head %}
+<script src="{% static 'js/angular.min.js' %}"></script>    
+{% endblock %}
+
+{% block nav %}  
+{% endblock %}
+
+{% block content %}  
+    {% verbatim %}
+    <div ng-app="turtle_facts">
+        <div class="container" style="text-align:center;" ng-app="turtle_facts">
+            <h2 class="title">Turtle Facts Quiz.</h2>
+            <h3>
+                Learn all about the turtles before you decide to take on the test.
+                <strong>TURTLE QUIZ</strong>
+            </h3>
+        </div>
+        <div ng-controller="list_controller as lc">
+            {{ lc.dummy_data }}
+        </div>
+    </div>
+    {% endverbatim %}
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/my_scripts/app.js' %}"></script>            
+    <script src="{% static 'js/my_scripts/controllers/list_controller.js' %}"></script>            
+{% endblock %}
+
+{% block footer %}   
+{% endblock %}
