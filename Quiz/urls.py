@@ -22,7 +22,14 @@ from django.urls import include, path, re_path
 from . import views
 
 
+from rest_framework import routers
+from quiz_test import api_views
+
+router = routers.DefaultRouter()
+router.register(r'turtles', api_views.TurtlesViewSet)
+
 urlpatterns = [
+    re_path(r'^api/', include(router.urls)),
     re_path('^$', views.test, name="test"),
     path('admin/', admin.site.urls),
     path('quiz/', include('quiz_test.urls')),
