@@ -12,5 +12,15 @@
                 $scope.error = response.statusText;         
                 console.log("Error");       
             });
+
+            this.active_turtle = {};
+            this.show_details = function(obj){
+                this.active_turtle = obj;
+                console.log("Show Details.");
+                console.log(this.active_turtle);
+            }
+
+            $scope.search = "";
+
         });
 })();
