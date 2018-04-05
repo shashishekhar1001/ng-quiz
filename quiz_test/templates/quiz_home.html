@@ -108,7 +108,7 @@
                 <div class="col-sm-8">
                     <h4>Progress:</h4>
                     <div class="btn-toolbar">
-                        <button class="btn" ng-repeat="q in quiz_data" ng-class="{'btn-info': q.selected !== null, 'btn-danger': q.selected === null}">
+                        <button class="btn" ng-repeat="q in quiz_data" ng-class="{'btn-info': q.selected !== null, 'btn-danger': q.selected === null}" ng-click="qc.set_active_question($index)">
                             <span>{{ $index + 1 }}</span>
                             <div class="ripple-container">
                             </div>
@@ -132,7 +132,11 @@
             <!-- End Progess Section -->           
             <hr/>
             <!-- Display Question Section -->
-            <div class="container">
+            <div class="container" ng-hide="qc.finalize">
+                <div class="alert alert-danger" ng-show="qc.error">
+                    Error! You have not answered all of the questions!
+                    <button class="close" ng-click="qc.error = false">&times;</button>
+                </div>
                 <h3>Question:</h3>
                 <div class="row">
                     <h4>{{ qc.active_question + 1 + ". " + quiz_data[qc.active_question].text }}</h4>
@@ -147,7 +151,16 @@
                 </div>
             </div>
             <!-- End Display Question Section -->
-            <div class="row">
+            <div ng-show="qc.finalize">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h3>Are you sure you want to submit all answers?</h3>
+                        <button class="btn btn-success">Yes</button>
+                        <button class="btn btn-danger" ng-click="qc.finalize=false">No</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row" ng-hide="qc.finalize">
                 <div class="col-sm-10"></div>
                 <div class="col-sm-2">
                     <button class="btn btn-warning btn-lg" ng-click="qc.next_triggered()">Continue</button>
