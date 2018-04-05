@@ -9,18 +9,30 @@ app.config(function($httpProvider) {
 	$httpProvider.defaults.headers.common['Accept'] = 'application/json, text/javascript';
 });
 
-app.factory('change_quiz_state', function () {
-
+app.factory('manage_state', function () {
     var data = {
-        activate_quiz: 'false'
+        toggle: true
+    };
+    return data;
+});
+
+
+
+app.factory('data_service', function ($http) {
+    var turtles_data = "";
+    var get_data = function(){
+        return $http.get("/api/turtles/")
+        .success(function(data, status){
+            turtles_data = data;
+            return turtles_data;
+        })
+        .error(function(data, status){
+            turtles_data = data;
+            return turtles_data;                        
+        });
     };
 
     return {
-        get_activate_quiz: function () {
-            return data.activate_quiz;
-        },
-        set_activate_quiz: function (state) {
-            data.activate_quiz = state;
-        }
+        get_data: get_data
     };
 });
