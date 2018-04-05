@@ -1,9 +1,46 @@
 app.controller("quiz_controller", function($http, $scope, $q, manage_state, data_service){
     this.state = manage_state;
     this.quiz = data_service;
-
+    this.total_answered_questions = 0;//Initially
+    
     this.quiz.get_quiz().then(function(response){
         $scope.quiz_data = response.data;
-        console.log($scope.quiz_data[0].selected);
-    })
+        // console.log($scope.quiz_data.length);
+        this.unanswerd_questions = $scope.quiz_data.length;         
+        console.log(this.unanswerd_questions); 
+    });
+
+    this.active_question = 0;
+    
+    this.set_active_question = function(){
+        var braekout = false;
+        var limit = $scope.quiz_data.length - 1;
+
+        while(!braekout){
+            this.active_question = this.active_question < limit?++this.active_question:0;
+            
+            if($scope.quiz_data[this.active_question].selected === null){
+                braekout = true;
+            }
+        }
+    };
+
+    this.next_triggered = function(){
+        console.log("Next Triggered.");
+        if($scope.quiz_data[this.active_question].selected !== null){
+            this.total_answered_questions++;
+            this.unanswerd_questions = $scope.quiz_data.length - this.total_answered_questions;
+            if(this.total_answered_questions >= $scope.quiz_data.length){
+                //Finalise the quiz
+            }
+        }
+
+        this.set_active_question();
+    };
+
+    this.select_answer = function(index){
+        $scope.quiz_data[this.active_question].selected = index;
+        console.log($scope.quiz_data[this.active_question].selected);
+    }
+
 });

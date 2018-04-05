@@ -23,7 +23,7 @@
                 <strong>TURTLE QUIZ</strong>
             </h3>
         </div>
-        <hr/><br/><br/>
+        <hr/>
         <!-- Start of List Controller -->
         <div ng-controller="list_controller as lc" ng-show="lc.state.toggle">
             <div class="container">
@@ -119,17 +119,40 @@
                     <div class="row">
                         <div class="col-sm-1" style="text-align:center;">                        
                             <h6>Done:</h6>
-                            <button class="btn btn-info">2</button>
+                            <button class="btn btn-info">{{ qc.total_answered_questions }}</button>
                         </div>
                         <div class="col-sm-2"></div>                        
                         <div class="col-sm-1" style="text-align:center;">                        
                             <h6>Remaining:</h6>
-                            <button class="btn btn-danger">2</button>
+                            <button class="btn btn-danger">{{ qc.unanswerd_questions }}</button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- End Progess Section -->            
+            <!-- End Progess Section -->           
+            <hr/>
+            <!-- Display Question Section -->
+            <div class="container">
+                <h3>Question:</h3>
+                <div class="row">
+                    <h4>{{ qc.active_question + 1 + ". " + quiz_data[qc.active_question].text }}</h4>
+                    <br/>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6" ng-repeat="option in quiz_data[qc.active_question].possible_answers">
+                        <button class="btn btn-lg" style="text-align:center; width: 80%;" ng-class="{'btn-info': $index === quiz_data[qc.active_question].selected}" ng-click="qc.select_answer($index)">
+                            {{ option.text }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- End Display Question Section -->
+            <div class="row">
+                <div class="col-sm-10"></div>
+                <div class="col-sm-2">
+                    <button class="btn btn-warning btn-lg" ng-click="qc.next_triggered()">Continue</button>
+                </div>
+            </div>
         </div>
         <!-- End of Quiz Controller -->        
     </div>
