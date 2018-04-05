@@ -32,7 +32,22 @@ app.factory('data_service', function ($http) {
         });
     };
 
+    var quiz_data = "";
+
+    var get_quiz = function(){
+        return $http.get("/api/quiz_questions/")
+        .success(function(data, status){
+            quiz_data = data;
+            return quiz_data;
+        })
+        .error(function(data, status){
+            quiz_data = data;
+            return quiz_data;                        
+        });
+    };
+
     return {
-        get_data: get_data
+        get_data: get_data,
+        get_quiz: get_quiz
     };
 });

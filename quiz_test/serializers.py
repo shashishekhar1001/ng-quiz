@@ -8,7 +8,7 @@ class TurtlesSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'turtle_type', 'image_url', 'locations', 'size', 'lifespan', 'diet', 'description')
 
 
-class Answer_OptionsSerializer(serializers.HyperlinkedModelSerializer):
+class Answer_OptionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer_Options
         fields = ('url', 'text')
@@ -20,6 +20,8 @@ class QuizSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class Quiz_QuestionSerializer(serializers.HyperlinkedModelSerializer):
+    possible_answers = Answer_OptionsSerializer(many=True, read_only=True)
+    correct = Answer_OptionsSerializer(read_only=True)
     class Meta:
         model = Quiz_Question
         fields = ('url', 'quiz', 'q_type', 'text', 'possible_answers', 'selected', 'correct')

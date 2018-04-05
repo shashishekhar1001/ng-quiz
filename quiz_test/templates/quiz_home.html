@@ -102,8 +102,34 @@
         <!-- End of List Controller -->
         
         <!-- Start of Quiz Controller -->
-        <div ng-controller="quiz_controller as qc" ng-hide="qc.state.toggle">
-            <h1>Quiz Now Activated.</h1>
+        <div class="container" ng-controller="quiz_controller as qc" ng-hide="qc.state.toggle">
+            <!-- Progess Section -->
+            <div class="row">
+                <div class="col-sm-8">
+                    <h4>Progress:</h4>
+                    <div class="btn-toolbar">
+                        <button class="btn" ng-repeat="q in quiz_data" ng-class="{'btn-info': q.selected !== null, 'btn-danger': q.selected === null}">
+                            <span>{{ $index + 1 }}</span>
+                            <div class="ripple-container">
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-1" style="text-align:center;">                        
+                            <h6>Done:</h6>
+                            <button class="btn btn-info">2</button>
+                        </div>
+                        <div class="col-sm-2"></div>                        
+                        <div class="col-sm-1" style="text-align:center;">                        
+                            <h6>Remaining:</h6>
+                            <button class="btn btn-danger">2</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Progess Section -->            
         </div>
         <!-- End of Quiz Controller -->        
     </div>
