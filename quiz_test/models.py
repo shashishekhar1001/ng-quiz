@@ -16,3 +16,41 @@ class Turtles(models.Model):
     class Meta:
         verbose_name = "Turtle"
         verbose_name_plural = "Turtles"
+
+
+class Answer_Options(models.Model):
+    text = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = "Answer Option"
+        verbose_name_plural = "Answer Options"
+
+class Quiz(models.Model):
+    quiz_name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.quiz_name
+
+    class Meta:
+        verbose_name = "Quiz"
+        verbose_name_plural = "Quizes"
+
+
+class Quiz_Question(models.Model):
+    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, blank=True, default=None, null=True)
+    q_type = models.CharField(max_length=50)
+    text = models.CharField(max_length=200)
+    possible_answers = models.ManyToManyField(Answer_Options)
+    selected = models.ForeignKey(Answer_Options, related_name="selected", default=None, on_delete=models.CASCADE)
+    correct = models.ForeignKey(Answer_Options, related_name="correct", default=None, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
+
+    class Meta:
+        verbose_name = "Quiz Question"
+        verbose_name_plural = "Quiz Questions"
+
