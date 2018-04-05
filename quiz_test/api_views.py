@@ -1,10 +1,23 @@
-from .models import Turtles
+from .models import *
 from rest_framework import viewsets
-from .serializers import TurtlesSerializer
+from .serializers import *
 
 class TurtlesViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = Turtles.objects.all()
     serializer_class = TurtlesSerializer
+
+
+class Answer_OptionsViewSet(viewsets.ModelViewSet):
+    queryset = Answer_Options.objects.all()
+    serializer_class = Answer_OptionsSerializer
+
+    
+class QuizViewSet(viewsets.ModelViewSet):
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
+
+
+    
+class Quiz_QuestionViewSet(viewsets.ModelViewSet):
+    queryset = Quiz_Question.objects.all()
+    serializer_class = Quiz_QuestionSerializer

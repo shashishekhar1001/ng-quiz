@@ -27,6 +27,9 @@ from quiz_test import api_views
 
 router = routers.DefaultRouter()
 router.register(r'turtles', api_views.TurtlesViewSet)
+router.register(r'answer_options', api_views.Answer_OptionsViewSet)
+router.register(r'quiz', api_views.QuizViewSet)
+router.register(r'quiz_questions', api_views.Quiz_QuestionViewSet)
 
 urlpatterns = [
     re_path(r'^api/', include(router.urls)),
