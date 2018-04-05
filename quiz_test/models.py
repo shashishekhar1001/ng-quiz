@@ -44,8 +44,8 @@ class Quiz_Question(models.Model):
     q_type = models.CharField(max_length=50)
     text = models.CharField(max_length=200)
     possible_answers = models.ManyToManyField(Answer_Options)
-    selected = models.ForeignKey(Answer_Options, related_name="selected", default=None, on_delete=models.CASCADE)
-    correct = models.ForeignKey(Answer_Options, related_name="correct", default=None, on_delete=models.CASCADE)
+    selected = models.ForeignKey(Answer_Options, related_name="selected", default=None, on_delete=models.CASCADE, blank=True, null=True)
+    correct = models.ForeignKey(Answer_Options, related_name="correct", default=None, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
         return self.text
