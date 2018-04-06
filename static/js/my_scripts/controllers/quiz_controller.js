@@ -9,8 +9,7 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
     
     this.quiz.get_quiz().then(function(response){
         $scope.quiz_data = response.data;
-        this.unanswerd_questions = $scope.quiz_data.length;         
-        console.log(this.unanswerd_questions); 
+        this.unanswerd_questions = $scope.quiz_data.length;     
     });
 
     this.active_question = 0;
@@ -56,7 +55,7 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
         this.set_active_question();
     };
 
-    this.select_answer = function(index){
+    this.select_answer = function(index, option){
         $scope.quiz_data[this.active_question].selected = index;
         if($scope.quiz_data[this.active_question].selected_set === true){
             console.log("Do not increment");
@@ -67,8 +66,22 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
                 this.unanswerd_questions = $scope.quiz_data.length - this.total_answered_questions;
             }
         }
-        console.log($scope.quiz_data[this.active_question].selected);
-        console.log($scope.quiz_data[this.active_question].selected_set);
-    }
+        $scope.quiz_data[this.active_question].selected_answer = option;
+    };
+
+    this.finalize_answers = function(){
+        console.log("Finalize Answers:-");
+        this.display_results = true;
+        this.active_question = 0;
+        this.correctly_answered = 0;
+        var myEl = angular.element( document.querySelector( '#see_results' ) );
+        myEl.remove();   //removes element
+        for(var i = 0; i < $scope.quiz_data.length; i++){
+            if($scope.quiz_data[i].selected_answer.text === $scope.quiz_data[i].correct.text){
+                this.correctly_answered++;
+            }
+        }
+        console.log(this.correctly_answered);
+    };
 
 });
