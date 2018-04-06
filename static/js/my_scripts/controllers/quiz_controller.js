@@ -9,7 +9,6 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
     
     this.quiz.get_quiz().then(function(response){
         $scope.quiz_data = response.data;
-        // console.log($scope.quiz_data.length);
         this.unanswerd_questions = $scope.quiz_data.length;         
         console.log(this.unanswerd_questions); 
     });
@@ -41,10 +40,6 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
     this.next_triggered = function(){
         console.log("Next Triggered.");
         if($scope.quiz_data[this.active_question].selected !== null){
-            if(this.total_answered_questions < $scope.quiz_data.length){
-                this.total_answered_questions++;
-            }
-            this.unanswerd_questions = $scope.quiz_data.length - this.total_answered_questions;
             if(this.total_answered_questions >= $scope.quiz_data.length){
                 for(var i = 0; i < $scope.quiz_data.length; i++){
                     if($scope.quiz_data[i].selected === null){
@@ -63,7 +58,17 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
 
     this.select_answer = function(index){
         $scope.quiz_data[this.active_question].selected = index;
+        if($scope.quiz_data[this.active_question].selected_set === true){
+            console.log("Do not increment");
+        }else{
+            $scope.quiz_data[this.active_question].selected_set = true;
+            if(this.total_answered_questions < $scope.quiz_data.length){
+                this.total_answered_questions++;
+                this.unanswerd_questions = $scope.quiz_data.length - this.total_answered_questions;
+            }
+        }
         console.log($scope.quiz_data[this.active_question].selected);
+        console.log($scope.quiz_data[this.active_question].selected_set);
     }
 
 });
