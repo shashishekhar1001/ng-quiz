@@ -5,6 +5,7 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
     this.error = false;
     this.finalize = false;
     this.total_answered_questions = 0;
+    this.finish = false;
     this.unanswerd_questions = "ALL"
     
     this.quiz.get_quiz().then(function(response){
@@ -37,7 +38,6 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
     };
 
     this.next_triggered = function(){
-        console.log("Next Triggered.");
         if($scope.quiz_data[this.active_question].selected !== null){
             if(this.total_answered_questions >= $scope.quiz_data.length){
                 for(var i = 0; i < $scope.quiz_data.length; i++){
@@ -58,7 +58,7 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
     this.select_answer = function(index, option){
         $scope.quiz_data[this.active_question].selected = index;
         if($scope.quiz_data[this.active_question].selected_set === true){
-            console.log("Do not increment");
+            console.log("");
         }else{
             $scope.quiz_data[this.active_question].selected_set = true;
             if(this.total_answered_questions < $scope.quiz_data.length){
@@ -70,18 +70,24 @@ app.controller("quiz_controller", function($http, $scope, $q, manage_state, data
     };
 
     this.finalize_answers = function(){
-        console.log("Finalize Answers:-");
         this.display_results = true;
         this.active_question = 0;
         this.correctly_answered = 0;
         var myEl = angular.element( document.querySelector( '#see_results' ) );
         myEl.remove();   //removes element
         for(var i = 0; i < $scope.quiz_data.length; i++){
-            if($scope.quiz_data[i].selected_answer.text === $scope.quiz_data[i].correct.text){
-                this.correctly_answered++;
+            if($scope.quiz_data[i].selected_answer === undefined){
+                var myEl = angular.element( document.querySelector( '#see_results' ) );
+                myEl.remove();   //removes element
+            }
+            else{ 
+                if($scope.quiz_data[i].selected_answer.text === $scope.quiz_data[i].correct.text){
+                    this.correctly_answered++;
+                    var myEl = angular.element( document.querySelector( '#see_results' ) );
+                    myEl.remove();   //removes element
+                }
             }
         }
-        console.log(this.correctly_answered);
     };
 
 });

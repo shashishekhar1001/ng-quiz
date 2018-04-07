@@ -104,7 +104,7 @@
         <!-- Start of Quiz Controller -->
         <div class="container" ng-controller="quiz_controller as qc" ng-hide="qc.state.toggle">
             <!-- Progess Section -->
-            <div class="row">
+            <div class="row" id="see_results">
                 <div class="col-sm-8">
                     <h4>Progress:</h4>
                     <div class="btn-toolbar">
@@ -129,10 +129,9 @@
                     </div>
                 </div>
             </div>
-            <!-- End Progess Section -->           
-            <hr/>
+            <!-- End Progess Section -->  
             <!-- Display Question Section -->
-            <div class="container" ng-hide="qc.finalize">
+            <div class="container" ng-hide="qc.finalize" id="see_results">
                 <div class="alert alert-danger" ng-show="qc.error">
                     Error! You have not answered all of the questions!
                     <button class="close" ng-click="qc.error = false">&times;</button>
@@ -160,14 +159,44 @@
                     </div>
                 </div>
             </div>
-            <div class="row" ng-hide="qc.finalize">
-                <div class="col-sm-10"></div>
+            <div class="row" ng-hide="qc.finalize" id="see_results">
+                <div class="col-sm-8"></div>
                 <div class="col-sm-2">
-                    <button class="btn btn-warning btn-lg" ng-click="qc.next_triggered()">Continue</button>
+                    <button class="btn btn-warning btn-lg" ng-click="qc.next_triggered()">Submit</button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="btn btn-warning btn-lg" ng-click="qc.finalize_answers()">Finish</button>
                 </div>
             </div>
 
             <!-- Display Correct Answers Section -->
+            <!-- Progess Section -->
+            <div class="row" ng-show="qc.display_results">
+                <div class="col-sm-8">
+                    <h4>Attempts:</h4>
+                    <div class="btn-toolbar">
+                        <button class="btn" ng-repeat="q in quiz_data" ng-class="{'btn-success': q.selected_answer.text === q.correct.text, 'btn-danger': q.selected_answer.text !== q.correct.text}" ng-click="qc.set_active_question($index)">
+                            <span>{{ $index + 1 }}</span>
+                            <div class="ripple-container">
+                            </div>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="row">
+                        <div class="col-sm-1" style="text-align:center;">                        
+                            <h6>Correct:</h6>
+                            <button class="btn btn-success">{{ qc.correctly_answered }}</button>
+                        </div>
+                        <div class="col-sm-2"></div>                        
+                        <div class="col-sm-1" style="text-align:center;">                        
+                            <h6>Wrong:</h6>
+                            <button class="btn btn-danger">{{ quiz_data.length - qc.correctly_answered }}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Progess Section -->
             <div class="container" ng-show="qc.display_results">
                 <h3>Correct Answers:</h3>
                 <div class="row">
@@ -182,7 +211,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-4"><h2>Your Score is</h2></div>
+                    <div class="col-sm-4"><h2>Your Score is:-</h2></div>
                     <div class="col-sm-8"><h2>{{ qc.correctly_answered }} / {{ quiz_data.length }}</h2></div>
                 </div>
             </div>
